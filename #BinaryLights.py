@@ -10,13 +10,12 @@ import time
 
 off = "pink"
 on = "red"
-stanDelay = time.delay(1)
+stanDelay = time.sleep(1)
 clk = 0
 
 def start():
     if clk % 1 == 0:
         mainCan.config(R1X, fill = on)
-    elif
 
 
 master = ttk.Tk()
