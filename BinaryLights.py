@@ -1,4 +1,6 @@
 #8-Bit Blinking Lights
+#la locura está aquí
+
 from base64 import standard_b64decode
 import json
 from json.tool import main
@@ -8,6 +10,11 @@ import tkinter as ttk
 import time
 import Update
 
+global R8X
+global R4X
+global R2X
+global R1X
+
 off = "pink"
 on = "Red"
 stanDelay = time.sleep(1)
@@ -15,10 +22,7 @@ clk = 0
 
 
 def start():
-    Update.update(
-        mainCan.c()
-    )
-    
+    Update.update()
 
 master = ttk.Tk()
 
@@ -51,9 +55,6 @@ R1X = mainCan.create_rectangle(
 )
 
 
-
-
-
 master.grid
 
 mainCan.grid(
@@ -64,7 +65,7 @@ mainCan.grid(
 
 startButton = ttk.Button(
     master,
-    text = "Start",
+    text = "Iterate",
     command = start
 )
 
