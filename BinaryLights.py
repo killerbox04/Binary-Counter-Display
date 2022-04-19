@@ -1,28 +1,62 @@
 #8-Bit Blinking Lights
 #la locura está aquí
 
-from base64 import standard_b64decode
-import json
-from json.tool import main
-from textwrap import fill
 from tkinter import *
 import tkinter as ttk
 import time
-import Update
 
 global R8X
 global R4X
 global R2X
 global R1X
+global clk
 
 off = "pink"
 on = "Red"
 stanDelay = time.sleep(1)
-clk = 0
+clk = 1
 
+def Halt():
+    global after_id
 
-def start():
-    Update.update()
+def update():
+    global after_id
+    global clk 
+    clk += 1
+    if clk % 1 == 0:
+        if mainCan.itemcget(R1X, "fill") == "pink":
+            mainCan.itemconfig(R1X, fill = "red")
+        else:
+            mainCan.itemconfig(R1X, fill = "pink")
+
+    if clk % 2 == 0:
+        if mainCan.itemcget(R2X, "fill") == "pink":
+            mainCan.itemconfig(R2X, fill = "red")
+        else:
+            mainCan.itemconfig(R2X, fill = "pink")
+
+    if clk % 4 == 0:
+        if mainCan.itemcget(R4X, "fill") == "pink":
+            mainCan.itemconfig(R4X, fill = "red")
+        else:
+            mainCan.itemconfig(R4X, fill = "pink")
+
+    if clk % 8 == 0:
+        if mainCan.itemcget(R8X, "fill") == "pink":
+            mainCan.itemconfig(R8X, fill = "red")
+        else: mainCan.itemconfig(R8X, fill = "pink") 
+    
+
+    after_id = master.after(1000, update)
+
+def Start():
+    update()
+
+def Halt():
+    global after_id
+    
+    if after_id:
+        master.after_cancel(after_id)
 
 master = ttk.Tk()
 
@@ -65,8 +99,14 @@ mainCan.grid(
 
 startButton = ttk.Button(
     master,
-    text = "Iterate",
-    command = start
+    text = "Start",
+    command = update
+)
+
+stopButton = ttk.Button(
+    master,
+    text = "Stop",
+    command = Halt
 )
 
 startButton.grid(
@@ -74,4 +114,14 @@ startButton.grid(
     column = 1
 )
 
+stopButton.grid(
+    row = 0,
+    column = 2
+)
+
+
+
 master.mainloop()
+
+
+
