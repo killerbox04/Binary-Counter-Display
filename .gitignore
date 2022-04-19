@@ -1,4 +1,5 @@
 .vscode
 BinaryCountDisplay.code-workspace
 __pycache__
-.BinaryLights.py.swp
+*.swp
+*.swa
