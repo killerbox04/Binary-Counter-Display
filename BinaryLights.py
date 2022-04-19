@@ -14,7 +14,7 @@ global clk
 off = "pink"
 on = "Red"
 stanDelay = time.sleep(1)
-clk = 1
+clk = 0
 
 def Halt():
     global after_id
