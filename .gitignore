@@ -3,3 +3,4 @@ BinaryCountDisplay.code-workspace
 __pycache__
 *.swp
 *.swa
+*.swo
