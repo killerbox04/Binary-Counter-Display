@@ -13,11 +13,9 @@ global clk
 
 off = "pink"
 on = "Red"
-stanDelay = time.sleep(1)
+stanDelay = 2000
 clk = 0
 
-def Halt():
-    global after_id
 
 def update():
     global after_id
@@ -40,14 +38,15 @@ def update():
             mainCan.itemconfig(R4X, fill = "red")
         else:
             mainCan.itemconfig(R4X, fill = "pink")
-
-    if clk % 8 == 0:
-        if mainCan.itemcget(R8X, "fill") == "pink":
+    
+    if clk % 8 == 0: 
+        if mainCan.itemcget(R8X, "fill") == "pink": 
             mainCan.itemconfig(R8X, fill = "red")
-        else: mainCan.itemconfig(R8X, fill = "pink") 
+        else:
+            mainCan.itemconfig(R8X, fill = "pink") 
     
 
-    after_id = master.after(1000, update)
+    after_id = master.after(stanDelay, update)
 
 def Start():
     update()
@@ -58,9 +57,26 @@ def Halt():
     if after_id:
         master.after_cancel(after_id)
 
+def Reset():
+    global after_id
+    global clk
+
+    clk = 0
+
+    if after_id:
+        master.after_cancel(after_id)
+
+    mainCan.itemconfig(R1X, fill = "pink")
+    mainCan.itemconfig(R2X, fill = "pink")
+    mainCan.itemconfig(R4X, fill = "pink")
+    mainCan.itemconfig(R8X, fill = "pink")
+
+def Quit():
+    quit()
+
 master = ttk.Tk()
 
-master.geometry("600x100")
+master.geometry("650x100")
 master.resizable(width = False, height = False)
 
 mainCan = Canvas(master, width=400, height=100)
@@ -89,14 +105,6 @@ R1X = mainCan.create_rectangle(
 )
 
 
-master.grid
-
-mainCan.grid(
-    row = 0,
-    column = 0,
-    sticky = "NSEW"
-)
-
 startButton = ttk.Button(
     master,
     text = "Start",
@@ -109,6 +117,26 @@ stopButton = ttk.Button(
     command = Halt
 )
 
+resetButton = ttk.Button(
+    master,
+    text = "Reset",
+    command = Reset
+)
+
+quitButton = ttk.Button(
+    master,
+    text = "Quit",
+    command = Quit
+)
+
+
+master.grid
+
+mainCan.grid(
+    row = 0,
+    column = 0
+)
+
 startButton.grid(
     row = 0,
     column = 1
@@ -119,7 +147,15 @@ stopButton.grid(
     column = 2
 )
 
+resetButton.grid(
+    row = 0,
+    column = 3
+)
 
+quitButton.grid(
+    row = 0,
+    column = 4
+)
 
 master.mainloop()
 
